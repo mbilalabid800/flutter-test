@@ -1,10 +1,18 @@
+import 'package:cartzilla/providers/product_provider.dart';
+import 'package:cartzilla/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => ProductProvider())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +31,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splash-screen',
       routes: {
         '/splash-screen': (context) => const SplashScreen(),
-        // '/home-screen': (BuildContext context) => const HomeScreen(),
+        '/home-screen': (BuildContext context) => const HomeScreen(),
         // '/print-example': (BuildContext context) => PrintExample(),
       },
     );

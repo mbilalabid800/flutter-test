@@ -1,17 +1,36 @@
 import 'package:cartzilla/constants/app_colors.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
+import 'package:cartzilla/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.screenBackground,
-        body: Padding(
+    return Scaffold(
+      backgroundColor: AppColors.screenBackground,
+      body: SafeArea(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
