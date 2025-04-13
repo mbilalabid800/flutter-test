@@ -1,8 +1,10 @@
 import 'package:cartzilla/constants/app_colors.dart';
+import 'package:cartzilla/providers/cart_provider.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:cartzilla/models/product_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProductWidget extends StatelessWidget {
   final ProductModel product;
@@ -11,11 +13,15 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final isInCart = cartProvider.items.any(
+      (item) => item.product.id == product.id,
+    );
     return Container(
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(color: AppColors.screenBackground),
       child: SizedBox(
-        height: 130, // ✅ Prevent overflow in GridView
+        height: 130,
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,21 +66,50 @@ class ProductWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
-                  Container(
-                    width: 90,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Add to cart',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  GestureDetector(
+                    onTap:
+                        isInCart
+                            ? null
+                            : () {
+                              cartProvider.addItem(product);
+                            },
+                    child: Container(
+                      width: 90,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child:
+                            isInCart
+                                ? Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 2),
+                                    Text(
+                                      'in your cart',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 10,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                : Text(
+                                  'Add to cart',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                       ),
                     ),
                   ),
@@ -82,7 +117,7 @@ class ProductWidget extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200, // light grey background
+                      color: Colors.grey.shade200,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

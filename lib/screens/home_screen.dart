@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cartzilla/constants/app_colors.dart';
+import 'package:cartzilla/providers/cart_provider.dart';
+import 'package:cartzilla/providers/navbar_provider.dart';
 import 'package:cartzilla/providers/product_provider.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
-import 'package:cartzilla/widget/custom_navbar_widget.dart';
 import 'package:cartzilla/widget/product_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     Future.microtask(() {
       Provider.of<ProductProvider>(context, listen: false).fetchProducts();
     });
@@ -26,6 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<CartProvider>().addListener(() {
+      context.read<NavBarProvider>().updateCartItemCount(
+        context.read<CartProvider>(),
+      );
+    });
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
       body: SafeArea(
@@ -89,7 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Consumer<ProductProvider>(
                   builder: (context, productProvider, child) {
                     if (productProvider.isLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return SizedBox(
+                        height: DeviceDimensions.screenHeight(context) * 0.5,
+                        child: const Center(
+                          child: CircularProgressIndicator(color: Colors.black),
+                        ),
+                      );
                     } else if (productProvider.errorMessage.isNotEmpty) {
                       return Center(
                         child: Text('Error: ${productProvider.errorMessage}'),
@@ -117,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 

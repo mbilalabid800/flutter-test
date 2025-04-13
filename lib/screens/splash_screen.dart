@@ -1,7 +1,8 @@
 import 'package:cartzilla/constants/app_colors.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
-import 'package:cartzilla/screens/home_screen.dart';
+import 'package:cartzilla/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,12 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    // Hide status bar
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => const MainScreen()),
       );
     });
   }
@@ -35,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: DeviceDimensions.screenHeight(context) * 0.010),
+              SizedBox(height: DeviceDimensions.screenHeight(context) * 0.020),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Image.asset(
@@ -105,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: DeviceDimensions.screenHeight(context) * 0.010),
+              SizedBox(height: DeviceDimensions.screenHeight(context) * 0.030),
             ],
           ),
         ),
