@@ -31,9 +31,24 @@ class ProductWidget extends StatelessWidget {
               height: 140,
               width: DeviceDimensions.screenWidth(context) * 0.40,
               child: Center(
-                child: Image.network(product.image, fit: BoxFit.contain),
+                child: Image.network(
+                  product.image,
+                  fit: BoxFit.contain,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const CircularProgressIndicator(color: Colors.black);
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.broken_image,
+                      color: Colors.grey,
+                      size: 50,
+                    );
+                  },
+                ),
               ),
             ),
+
             SizedBox(height: DeviceDimensions.screenHeight(context) * 0.015),
             // Description
             Padding(

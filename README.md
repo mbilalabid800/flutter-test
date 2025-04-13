@@ -1,16 +1,38 @@
-# cartzilla
+# Cartzilla
+A new Flutter project for building a shopping cart app, demonstrating features like API integration, state management using Provider, and responsive design.
 
-A new Flutter project.
+## How to Run This Flutter App Locally
+Follow the steps below to get Cartzilla running on your local machine:
 
-## Getting Started
+## Prerequisites
+Before getting started, make sure you have the following installed:
 
-This project is a starting point for a Flutter application.
+Flutter SDK: Install Flutter
 
-A few resources to get you started if this is your first Flutter project:
+Git: Install Git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Android Studio / VS Code with a connected emulator or physical device
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Step-by-Step Instructions
+1. Clone the Repository
+Open your terminal and run the following command to clone the repository:
+
+git clone https://github.com/mbilalabid800/flutter-test.git
+cd cartzilla
+
+2. Get the Dependencies
+Install all required dependencies by running:
+flutter pub get
+This command will fetch the following essential packages:
+
+google_fonts – For stylish typography
+
+dio – For handling REST API requests
+
+provider – For state management
+
+## Run the App
+   
+Make sure you have an emulator running or a physical device connected, then execute the following command to launch the app:
+flutter run
+This will compile and launch the app on the selected device.

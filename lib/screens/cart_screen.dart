@@ -1,6 +1,7 @@
 import 'package:cartzilla/constants/app_colors.dart';
 import 'package:cartzilla/providers/cart_provider.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
+import 'package:cartzilla/widget/bread_crumb.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,10 +35,7 @@ class _CartScreenState extends State<CartScreen> {
                 SizedBox(
                   height: DeviceDimensions.screenHeight(context) * 0.010,
                 ),
-                Text(
-                  "Home > Shop > Cart",
-                  style: GoogleFonts.inter(color: Colors.black, fontSize: 13),
-                ),
+                Breadcrumb(items: ["Home", "Shop", "Cart"]),
                 SizedBox(
                   height: DeviceDimensions.screenHeight(context) * 0.010,
                 ),
@@ -134,7 +132,33 @@ class _CartScreenState extends State<CartScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.network(product.image, width: 70, height: 70),
+                          SizedBox(
+                            height: 80,
+                            width: 80,
+                            child: Center(
+                              child: Image.network(
+                                product.image,
+                                fit: BoxFit.contain,
+                                loadingBuilder: (
+                                  context,
+                                  child,
+                                  loadingProgress,
+                                ) {
+                                  if (loadingProgress == null) return child;
+                                  return const CircularProgressIndicator(
+                                    color: Colors.black,
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.broken_image,
+                                    color: Colors.grey,
+                                    size: 50,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: Text(

@@ -5,9 +5,11 @@ import 'package:cartzilla/providers/cart_provider.dart';
 import 'package:cartzilla/providers/navbar_provider.dart';
 import 'package:cartzilla/providers/product_provider.dart';
 import 'package:cartzilla/responsive/device_dimensions.dart';
+import 'package:cartzilla/widget/bread_crumb.dart';
 import 'package:cartzilla/widget/product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -50,10 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: DeviceDimensions.screenHeight(context) * 0.010,
                 ),
-                const Text(
-                  "Home > Shop",
-                  style: TextStyle(color: Colors.black, fontSize: 13),
-                ),
+                Breadcrumb(items: ["Home", "Shop"]),
                 SizedBox(
                   height: DeviceDimensions.screenHeight(context) * 0.010,
                 ),
@@ -144,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+            style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 12),
           ),
           const SizedBox(width: 6),
           const Icon(Icons.keyboard_arrow_down, size: 16),
@@ -170,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Icon(Icons.close, size: 16, color: Colors.black54),
           ),
           const SizedBox(width: 6),
-          Text(label, style: const TextStyle(fontSize: 12)),
+          Text(label, style: GoogleFonts.inter(fontSize: 12)),
         ],
       ),
     );
